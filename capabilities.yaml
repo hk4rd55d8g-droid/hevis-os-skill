@@ -1,0 +1,39 @@
+# capabilities.yaml
+# Hevis-OS 官方 Skill 能力声明
+# 服务端通过此文件了解 Skill 支持的能力
+# 同步机制: GitHub Release → Webhook → 服务端
+
+skill_name: "hevis-os-official"
+skill_id: "hevis-os-skill"
+version: "1.0.0"
+
+capabilities:
+  - id: "person"
+    apis: ["memory.read", "memory.write"]
+  - id: "task"
+    apis: ["memory.read", "memory.write", "workflow.execute"]
+  - id: "brief"
+    apis: ["memory.read", "context.inject"]
+  - id: "prepare"
+    apis: ["workflow.bootstrap", "workflow.plan", "workflow.execute"]
+  - id: "store"
+    apis: ["memory.write", "memory.read"]
+  - id: "search"
+    apis: ["memory.read"]
+  - id: "record"
+    apis: ["memory.write", "workflow.execute"]
+  - id: "ingest"
+    apis: ["memory.write"]
+  - id: "connect"
+    apis: ["memory.read", "memory.write"]
+  - id: "target"
+    apis: ["memory.read", "memory.write"]
+
+connector:
+  min_version: "1.0.0"
+  compatible_versions: ["1.0.0", "1.1.0", "1.2.0"]
+
+platforms:
+  - "qoderwork"
+  - "workbuddy"
+  - "generic"

@@ -1,0 +1,31 @@
+name: Notify Hevis-OS Server
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify server via webhook
+        run: |
+          curl -X POST "${{ secrets.HEVIS_SERVER_URL }}/api/v1/webhook.skill_release" \
+            -H "Content-Type: application/json" \
+            -H "X-Hub-Signature-256: sha256=${{ secrets.HEVIS_WEBHOOK_SECRET }}" \
+            -d '{
+              "repository": {
+                "full_name": "hk4rd55d8g-droid/hevis-os-skill",
+                "clone_url": "https://github.com/hk4rd55d8g-droid/hevis-os-skill.git"
+              },
+              "release": {
+                "tag_name": "${{ github.event.release.tag_name }}",
+                "name": "${{ github.event.release.name }}",
+                "body": ${{ toJSON(github.event.release.body) }},
+                "published_at": "${{ github.event.release.published_at }}",
+                "html_url": "${{ github.event.release.html_url }}"
+              },
+              "sender": {
+                "login": "${{ github.actor }}"
+              }
+            }'
