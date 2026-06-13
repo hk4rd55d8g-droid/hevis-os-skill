@@ -1,0 +1,139 @@
+# capabilities.yaml
+# Hevis-OS 官方 Skill 能力声明
+# 服务端通过此文件了解 Skill 支持的能力
+# 同步机制: GitHub Release → Webhook → 服务端
+
+skill_name: "hevis-os-official-skill"
+skill_id: "hevis-os-skill"
+version: "1.2.0"
+
+# Skill 支持的能力域（对应 /api/v1/capabilities 的 id）
+# 完整版本对齐 configs/capabilities.yaml（服务端能力声明）
+capabilities:
+  - id: "person"
+    name: "人"
+    name_en: "People"
+    description: "人物卡片、关系网络、评分管理"
+    icon: "👤"
+    categories: ["person"]
+    apis: ["memory.read", "memory.write"]
+
+  - id: "task"
+    name: "事"
+    name_en: "Tasks"
+    description: "项目、商机、任务、供应商管理"
+    icon: "📋"
+    categories: ["task", "project", "opportunity"]
+    apis: ["memory.read", "memory.write", "workflow.execute"]
+
+  - id: "brief"
+    name: "看"
+    name_en: "Brief"
+    description: "每日简报、使用分析、运营数据"
+    icon: "📊"
+    categories: ["brief"]
+    apis: ["memory.read", "context.inject"]
+
+  - id: "prepare"
+    name: "备"
+    name_en: "Prepare"
+    description: "会前准备、材料整理、会议支持"
+    icon: "🎯"
+    categories: ["prepare"]
+    apis: ["workflow.bootstrap", "workflow.plan", "workflow.execute"]
+
+  - id: "store"
+    name: "存"
+    name_en: "Store"
+    description: "文档结构化、知识库管理、归档"
+    icon: "📁"
+    categories: ["store", "knowledge"]
+    apis: ["memory.write", "memory.read"]
+
+  - id: "search"
+    name: "搜"
+    name_en: "Search"
+    description: "全网知识搜索、知识库检索"
+    icon: "🔍"
+    categories: ["search"]
+    apis: ["memory.read"]
+
+  - id: "record"
+    name: "记"
+    name_en: "Record"
+    description: "录音、会议记录、AI 分析、纪要生成"
+    icon: "🎙️"
+    categories: ["meeting", "recording"]
+    apis: ["memory.write", "workflow.execute"]
+
+  - id: "ingest"
+    name: "摄"
+    name_en: "Ingest"
+    description: "数据摄入：系统分享、相机、扫描、剪贴板、文件"
+    icon: "📥"
+    categories: ["ingest"]
+    apis: ["memory.write"]
+
+  - id: "connect"
+    name: "连"
+    name_en: "Connect"
+    description: "第三方平台连接、Skill 码管理、外部 Agent 接入"
+    icon: "🔗"
+    categories: ["connect", "integration"]
+    apis: ["memory.read", "memory.write"]
+
+  - id: "target"
+    name: "标"
+    name_en: "Target"
+    description: "OKR 目标管理、目标网络、关键成果追踪"
+    icon: "🎯"
+    categories: ["target", "okr"]
+    apis: ["memory.read", "memory.write"]
+
+# Skill 依赖的连接器版本
+connector:
+  min_version: "1.0.0"
+  compatible_versions: ["1.0.0", "1.1.0", "1.2.0"]
+
+# Skill 支持的平台
+platforms:
+  - "qoderwork"
+  - "workbuddy"
+  - "coze"
+  - "dify"
+  - "chatgpt"
+  - "generic"
+
+# 核心 API 定义（供权限控制使用）
+core_apis:
+  memory.read:
+    description: "读取组织记忆"
+    methods: ["POST"]
+
+  memory.write:
+    description: "写入组织记忆"
+    methods: ["POST"]
+
+  memory.subscribe:
+    description: "订阅记忆变更"
+    methods: ["GET"]
+
+  workflow.bootstrap:
+    description: "工作流启动"
+    methods: ["POST"]
+
+  workflow.plan:
+    description: "工作流规划"
+    methods: ["POST"]
+
+  workflow.execute:
+    description: "工作流执行"
+    methods: ["POST"]
+
+  context.inject:
+    description: "上下文注入"
+    methods: ["POST"]
+
+  feedback.report:
+    description: "反馈上报"
+    methods: ["POST"]
